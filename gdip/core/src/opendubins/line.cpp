@@ -27,8 +27,8 @@ namespace opendubins {
         return State(p, dir.getAngle());
     }
 
-    StateAtDistance Line::getClosestStateAndDistance(const Point &p) const {
-        StateAtDistance ret;
+    StateAtDistance<State> Line::getClosestStateAndDistance(const Point &p) const {
+        StateAtDistance<State> ret;
 
         auto len = getLength();
         if (len < TOLERANCE) {
@@ -74,7 +74,7 @@ namespace opendubins {
         return false;
     }
 
-    StateAtDistance Line::intersectionPoint(Line line) const {
+    StateAtDistance<State> Line::intersectionPoint(Line line) const {
 
         if (intersect(line)) {
             Vector dir2 = line.getDirection();
@@ -87,13 +87,13 @@ namespace opendubins {
                 dist = dist / speed;
 
                 Point inter = p1 + getDirection().normalize() * dist;
-                return StateAtDistance(State(inter, getDirection().getAngle()), dist);
+                return StateAtDistance<State>(State(inter, getDirection().getAngle()), dist);
                 // TODO
                 //return Intersection(Position(Point(0,0), 0), 0);
             }
         }
 
-        return StateAtDistance(State(), 0);
+        return StateAtDistance<State>(State(), 0);
     }
 
 }

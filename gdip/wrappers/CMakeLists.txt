@@ -14,7 +14,6 @@ set(SOURCE_FILES
         ../core/src/opendubins/dip.cpp
         ../core/src/opendubins/gdip.cpp
         ../core/src/opendubins/line.cpp
-        ../core/src/opendubins/path.cpp
         ../core/src/opendubins/state.cpp
         ../core/src/opendubins/dubinspath.cpp
         ../core/src/opendubins/angleinterval.cpp

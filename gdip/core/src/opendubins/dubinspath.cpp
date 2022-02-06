@@ -43,8 +43,8 @@ namespace opendubins {
         return false;
     }
 
-    StateAtDistance DubinsPath::getClosestStateAndDistance(const Point &p) const {
-        StateAtDistance closest;
+    StateAtDistance<State> DubinsPath::getClosestStateAndDistance(const Point &p) const {
+        StateAtDistance<State> closest;
         // compute distance of all previous maneuvers
         double distance = 0;
         // iterate over all maneuvers
@@ -59,14 +59,14 @@ namespace opendubins {
         return closest;
     }
 
-    StateAtDistance DubinsPath::intersectionPoint(Line line) const{
+    StateAtDistance<State> DubinsPath::intersectionPoint(Line line) const{
         for(auto d : path){
             auto intersection = d.intersectLine(line);
             if(intersection.isValid()){
                 return intersection;
             }
         }
-        return StateAtDistance();
+        return StateAtDistance<State>();
     }
 
     std::vector<Point> DubinsPath::interpolate(double step) const {

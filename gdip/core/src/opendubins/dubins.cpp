@@ -65,8 +65,8 @@ namespace opendubins {
         return path3.getState(len - l1 - l2);
     }
 
-    StateAtDistance Dubins::getClosestStateAndDistance(const Point &p) const {
-        StateAtDistance closest;
+    StateAtDistance<State> Dubins::getClosestStateAndDistance(const Point &p) const {
+        StateAtDistance<State> closest;
 
         // initialize by the start position
         closest.state = start;
@@ -130,9 +130,9 @@ namespace opendubins {
         return Arc(st, len3, radius);
     }
 
-    StateAtDistance Dubins::intersectLine(const Line &line) const {
+    StateAtDistance<State> Dubins::intersectLine(const Line &line) const {
 
-        StateAtDistance p = getFirstArc().intersectionPoint(line);
+        StateAtDistance<State> p = getFirstArc().intersectionPoint(line);
         if (!p.state.invalid()) {
             return p;
         }
@@ -154,7 +154,7 @@ namespace opendubins {
             return p;
         }
 
-        return StateAtDistance(State(), 0);
+        return StateAtDistance<State>(State(), 0);
     }
 
     // Find the first intrsection between Dubins and Circle
@@ -162,18 +162,18 @@ namespace opendubins {
     // Validity of state can be tested by Dubins::isValid() function
     // Returned StateAtDistance type also contains information about distance
     // in which intersection occurs.
-    StateAtDistance Dubins::intersectCircle(const Circle &circle) const {
+    StateAtDistance<State> Dubins::intersectCircle(const Circle &circle) const {
         State state;
         double len;
         tie(state, len) = circle.firstIntersection(getFirstArc());
         if (state.isValid() && len < getFirstArc().getLength()) {
-            return StateAtDistance(state, len);
+            return StateAtDistance<State>(state, len);
         }
 
         if (isCCC) {
             tie(state, len) = circle.firstIntersection(getCenterArc());
             if (!state.invalid() && len < getCenterArc().getLength()) {
-                return StateAtDistance(state, len + getFirstArc().getLength());
+                return StateAtDistance<State>(state, len + getFirstArc().getLength());
             }
         } else {
             Line center_segment = getCenter();
@@ -182,7 +182,7 @@ namespace opendubins {
                 double dist = candidate.distance(center_segment.getStart().point);
                 if(dist <= center_segment.getLength()){
                     dist += getFirstArc().getLength();
-                    return StateAtDistance(getState(dist), dist);
+                    return StateAtDistance<State>(getState(dist), dist);
                 }
             }
         }
@@ -196,10 +196,10 @@ namespace opendubins {
                 totalLength += getCenter().getLength();
             }
             totalLength += len;
-            return StateAtDistance(state, totalLength);
+            return StateAtDistance<State>(state, totalLength);
         }
 
-        return StateAtDistance(State::getInvalid(), NAN);
+        return StateAtDistance<State>(State::getInvalid(), NAN);
     }
 
     bool Dubins::intersectLineBool(const Line &line) const {

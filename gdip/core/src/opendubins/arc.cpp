@@ -12,8 +12,8 @@ namespace opendubins {
         return getStateByAngle(len * sgn(angle) / radius);
     }
 
-    StateAtDistance Arc::getClosestStateAndDistance(const Point &p) const {
-        StateAtDistance ret;
+    StateAtDistance<State> Arc::getClosestStateAndDistance(const Point &p) const {
+        StateAtDistance<State> ret;
 
         // start state
         ret.state = state;
@@ -54,10 +54,10 @@ namespace opendubins {
         return ret;
     }
 
-    StateAtDistance Arc::intersectionPoint(const Line &line) const {
+    StateAtDistance<State> Arc::intersectionPoint(const Line &line) const {
         double rad = getLength() + line.getLength();
         if ((state.point - line.p1).lengthSquared() > rad * rad) {
-            return StateAtDistance(State(), 0);
+            return StateAtDistance<State>(State(), 0);
         }
 
         // calculate two points of intersection
@@ -69,7 +69,7 @@ namespace opendubins {
         Vector vDistance = -distance * normal;
 
         if (distance > radius) {
-            return StateAtDistance(State(), 0);
+            return StateAtDistance<State>(State(), 0);
         }
 
         double tangentAngle = vDistance.getAngle() + (angle > 0 ? M_PI / 2 : -M_PI / 2);
@@ -90,7 +90,7 @@ namespace opendubins {
                 double dist = dir.dotProduct(p.point - line.p1);
 
                 if (dist >= 0 && dist < line.getDirection().length()) {
-                    return StateAtDistance(p, less * radius);
+                    return StateAtDistance<State>(p, less * radius);
                 }
 
                 if (more <= angle) {
@@ -98,7 +98,7 @@ namespace opendubins {
                     dist = dir.dotProduct(p.point - line.p1);
 
                     if (dist >= 0 && dist < line.getDirection().length()) {
-                        return StateAtDistance(p, more * radius);
+                        return StateAtDistance<State>(p, more * radius);
                     }
                 }
             }
@@ -114,7 +114,7 @@ namespace opendubins {
                 double dist = dir.dotProduct(p.point - line.p1);
 
                 if (dist >= 0 && dist < line.getDirection().length()) {
-                    return StateAtDistance(p, less * -radius);
+                    return StateAtDistance<State>(p, less * -radius);
                 }
 
                 if (more >= angle) {
@@ -122,7 +122,7 @@ namespace opendubins {
                     dist = dir.dotProduct(p.point - line.p1);
 
                     if (dist >= 0 && dist < line.getDirection().length()) {
-                        return StateAtDistance(p, more * -radius);
+                        return StateAtDistance<State>(p, more * -radius);
                     }
                 }
             }
@@ -130,7 +130,7 @@ namespace opendubins {
 
         // todo - try to refactor
 
-        return StateAtDistance(State(), 0);
+        return StateAtDistance<State>(State(), 0);
     }
 
     Point Arc::getCenter() const {
