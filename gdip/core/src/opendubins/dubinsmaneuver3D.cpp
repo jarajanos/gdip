@@ -15,7 +15,12 @@ namespace opendubins
     this->radiusMin = minRadius;
     this->minPitch = minPitch;
     this->maxPitch = maxPitch;
+    
+    this->start = from;
+    this->end = to;
+
     this->length = std::numeric_limits<double>::max();
+    
     init(from, to);
   } 
 

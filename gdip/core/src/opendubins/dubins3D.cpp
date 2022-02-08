@@ -42,7 +42,8 @@ namespace opendubins
   }
 
   std::ostream &operator<<(std::ostream &os, const Dubins3D &d) {
-    os << "Dubins maneuver 3D, TODO";
+    os << "Dubins maneuver 3D, horizontal maneuver: " << d.path.DubinsLat \
+    << ",\nvertical maneuver: " << d.path.DubinsLon << ",\ntotal length: " << d.length << '\n';
     return os;
   }
 
