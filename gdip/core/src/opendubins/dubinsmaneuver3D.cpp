@@ -31,7 +31,7 @@ namespace opendubins
 
     Dubins3DPath trial{tryToConstruct(radiusMin * mult)};
 
-    while (!trial.isValid) {
+    while (!trial.isValid && mult <= 1024) {
       mult *= 2;
       trial = tryToConstruct(radiusMin * mult);
     }
